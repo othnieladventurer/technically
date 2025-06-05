@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechTrend Electronics | Premium Smartphones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#fd7e14',
+                        secondary: '#f76707',
+                        accent: '#ff922b',
+                        dark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #fd7e14, #f76707);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #f76707;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .show-menu {
+            max-height: 300px;
+        }
+        .show-demo {
+            display: block;
+        }
+        .hero-slide {
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+        .hero-slide.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- Top Bar -->
+    <div class="bg-dark text-white py-2 text-sm">
+        <div class="container mx-auto flex justify-between px-4">
+            <div class="flex space-x-4">
+                <span><i class="fas fa-headset mr-1"></i> Customer Support: +1 800-TECHTRD</span>
+                <span><i class="fas fa-truck mr-1"></i> Free Shipping Worldwide</span>
+            </div>
+            <div class="flex space-x-4">
+                <span><i class="fas fa-dollar-sign mr-1"></i> USD</span>
+                <span><i class="fas fa-globe mr-1"></i> English</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#" class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-mobile-alt text-primary mr-2"></i>
+                    <span class="text-dark">TechTrend</span>
+                </a>
+
+                <!-- Mobile menu button -->
+                <button id="menuToggle" class="md:hidden">
+                    <i class="fas fa-bars text-2xl text-dark"></i>
+                </button>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="font-semibold hover:text-primary transition-colors">Home</a>
+                    <div class="dropdown relative">
+                        <button class="font-semibold hover:text-primary transition-colors flex items-center">
+                            Brands <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white rounded-lg shadow-lg py-2 mt-1 w-48 z-10">
+                            <a href="#" class="block px-4 py-2 hover:bg-slate-100">Apple</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-slate-100">Samsung</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-slate-100">Google Pixel</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-slate-100">OnePlus</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-slate-100">Xiaomi</a>
+                        </div>
+                    </div>
+                    <a href="#" class="font-semibold hover:text-primary transition-colors">Best Sellers</a>
+                    <a href="#" class="font-semibold hover:text-primary transition-colors">Deals</a>
+                    <a href="#" class="font-semibold hover:text-primary transition-colors">Accessories</a>
+                </nav>
+
+                <!-- Nav icons -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <button class="relative">
+                        <i class="fas fa-search text-xl text-slate-600 hover:text-primary"></i>
+                    </button>
+                    <button class="relative">
+                        <i class="far fa-user text-xl text-slate-600 hover:text-primary"></i>
+                    </button>
+                    <button class="relative" id="cartIcon">
+                        <i class="fas fa-shopping-cart text-xl text-slate-600 hover:text-primary"></i>
+                        <span id="cartItemCount" class="cart-count hidden">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div id="mobileMenu" class="mobile-menu md:hidden mt-2">
+                <div class="flex flex-col space-y-2 pb-3">
+                    <a href="#" class="py-2 hover:bg-slate-100 px-2 rounded">Home</a>
+                    <div>
+                        <button onclick="toggleMobileBrands()" class="py-2 hover:bg-slate-100 px-2 rounded w-full text-left flex justify-between">
+                            Brands <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div id="mobileBrands" class="pl-4 hidden">
+                            <a href="#" class="block py-2 hover:bg-slate-100 rounded">Apple</a>
+                            <a href="#" class="block py-2 hover:bg-slate-100 rounded">Samsung</a>
+                            <a href="#" class="block py-2 hover:bg-slate-100 rounded">Google Pixel</a>
+                            <a href="#" class="block py-2 hover:bg-slate-100 rounded">OnePlus</a>
+                            <a href="#" class="block py-2 hover:bg-slate-100 rounded">Xiaomi</a>
+                        </div>
+                    </div>
+                    <a href="#" class="py-2 hover:bg-slate-100 px-2 rounded">Best Sellers</a>
+                    <a href="#" class="py-2 hover:bg-slate-100 px-2 rounded">Deals</a>
+                    <a href="#" class="py-2 hover:bg-slate-100 px-2 rounded">Accessories</a>
+                    <div class="flex justify-around pt-3">
+                        <button><i class="fas fa-search text-xl"></i></button>
+                        <button><i class="far fa-user text-xl"></i></button>
+                        <button class="relative" id="mobileCartIcon">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="mobileCartItemCount" class="cart-count">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white overflow-hidden">
+        <div class="relative">
+            <!-- Slide 1 -->
+            <div class="hero-slide active h-screen">
+                <div class="container mx-auto px-4 h-full flex items-center py-10">
+                    <div class="flex flex-col md:flex-row justify-between items-center w-full">
+                        <div class="md:w-1/2 mb-8 md:mb-0 px-4">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Unleash the Future in Your Pocket</h1>
+                            <p class="text-lg md:text-xl mb-8 opacity-90">Experience the latest innovations in mobile technology with cutting-edge smartphones at unbeatable prices.</p>
+                            <div class="flex space-x-4">
+                                <button class="bg-white text-dark font-bold py-3 px-6 rounded-lg hover:bg-primary hover:text-white transition-colors">Shop Now</button>
+                                <button class="bg-transparent border-2 border-white text-white font-bold py-3 px-6 rounded-lg hover:bg-white hover:text-primary transition-colors">View Deals</button>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Premium Smartphones" class="rounded-xl shadow-2xl max-w-full transform rotate-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="hero-slide h-screen">
+                <div class="container mx-auto px-4 h-full flex items-center py-10">
+                    <div class="flex flex-col md:flex-row justify-between items-center w-full">
+                        <div class="md:w-1/2 mb-8 md:mb-0 px-4">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Limited Time Offers</h1>
+                            <p class="text-lg md:text-xl mb-8 opacity-90">Get the best deals on flagship smartphones with exclusive discounts.</p>
+                            <div class="flex space-x-4">
+                                <button class="bg-white text-dark font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition-colors">Discover Offers</button>
+                                <button class="bg-transparent border-2 border-white text-white font-bold py-3 px-6 rounded-lg hover:bg-white hover:bg-opacity-10 transition-colors">Browse All Sales</button>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Special Offers" class="rounded-xl shadow-2xl max-w-full transform -rotate-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="hero-slide h-screen">
+                <div class="container mx-auto px-4 h-full flex items-center py-10">
+                    <div class="flex flex-col md:flex-row-reverse justify-between items-center w-full">
+                        <div class="md:w-1/2 mb-8 md:mb-0 px-4">
+                            <h1 class="text-4xl md:text-6xl font-bold mb-4">Premium Accessories</h1>
+                            <p class="text-lg md:text-xl mb-8 opacity-90">Complete your setup with high-quality cases, chargers, and more.</p>
+                            <div class="flex space-x-4">
+                                <button class="bg-white text-dark font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition-colors">Browse Accessories</button>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 flex justify-center">
+                            <div class="grid grid-cols-2 gap-4">
+                                <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=500&q=80" alt="Accessory 1" class="rounded-xl shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&h=500&q=80" alt="Accessory 2" class="rounded-xl shadow-2xl">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="flex justify-center space-x-2 pb-8 -mt-8 relative z-10">
+                <button class="w-3 h-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-100 dot active" data-slide="0"></button>
+                <button class="w-3 h-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-100 dot" data-slide="1"></button>
+                <button class="w-3 h-3 rounded-full bg-white bg-opacity-30 hover:bg-opacity-100 dot" data-slide="2"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Brands -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 text-dark">Trusted Brands</h2>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                <div class="bg-slate-100 rounded-xl p-6 flex items-center justify-center transition-all hover:shadow-lg">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="h-12">
+                </div>
+                <div class="bg-slate-100 rounded-xl p-6 flex items-center justify-center transition-all hover:shadow-lg">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Xiaomi_logo.svg" alt="Xiaomi" class="h-10">
+                </div>
+                <div class="bg-slate-100 rounded-xl p-6 flex items-center justify-center transition-all hover:shadow-lg">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg" alt="Samsung" class="h-8">
+                </div>
+                <div class="bg-slate-100 rounded-xl p-6 flex items-center justify-center transition-all hover:shadow-lg">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="h-8">
+                </div>
+                <div class="bg-slate-100 rounded-xl p-6 flex items-center justify-center transition-all hover:shadow-lg">
+                    <img src="https://1000logos.net/wp-content/uploads/2022/11/OnePlus-Logo.png" alt="OnePlus" class="h-8">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-12 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold text-dark">Featured Products</h2>
+                <div>
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg mr-2">All</button>
+                    <button class="border border-primary text-primary px-4 py-2 rounded-lg mr-2 hover:bg-primary hover:text-white transition-colors">New</button>
+                    <button class="border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary hover:text-white transition-colors">Best Sellers</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden transition-all duration-300 card-hover">
+                    <div class="relative">
+                        <img src="https://m.media-amazon.com/images/I/81CgtwSII3L._AC_UF1000,1000_QL80_.jpg" alt="iPhone 15 Pro Max" class="w-full h-60 object-contain">
+                        <span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-xs">NEW</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">iPhone 15 Pro Max</h3>
+                                <p class="text-slate-600 text-sm">A17 Pro chip, Titanium design</p>
+                            </div>
+                            <div class="flex items-center text-accent">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-slate-500 ml-1">(128)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-xl font-bold text-dark">$1,299</span>
+                            <button class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors product-btn" data-name="iPhone 15 Pro Max" data-price="1299">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden transition-all duration-300 card-hover">
+                    <div class="relative">
+                        <img src="https://m.media-amazon.com/images/I/71M3DSELNsL._AC_UF1000,1000_QL80_.jpg" alt="Samsung Galaxy S23 Ultra" class="w-full h-60 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Samsung S23 Ultra</h3>
+                                <p class="text-slate-600 text-sm">200MP Camera, Snapdragon 8 Gen 2</p>
+                            </div>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-slate-500 ml-1">(97)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div>
+                                <span class="text-xl font-bold text-dark">$1,199</span>
+                                <span class="text-slate-400 text-sm line-through ml-2">$1,299</span>
+                            </div>
+                            <button class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors product-btn" data-name="Samsung S23 Ultra" data-price="1199">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden transition-all duration-300 card-hover">
+                    <div class="relative">
+                        <img src="https://i.insider.com/65cfbe826fcb546d2d50f6cc?width=700" alt="Google Pixel 8 Pro" class="w-full h-60 object-contain">
+                        <span class="absolute top-2 right-2 bg-primary text-white px-2 py-1 rounded text-xs">TOP</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">Google Pixel 8 Pro</h3>
+                                <p class="text-slate-600 text-sm">Tensor G3, Super Actua display</p>
+                            </div>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-slate-500 ml-1">(143)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-xl font-bold text-dark">$999</span>
+                            <button class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors product-btn" data-name="Google Pixel 8 Pro" data-price="999">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden transition-all duration-300 card-hover">
+                    <div class="relative">
+                        <img src="https://www.cnet.com/a/img/resize/c79498e40bd93d1f5bade84fc93fb91fa7da7f5a/hub/2023/02/05/9bd12b8d-db91-426d-9f44-22381f35232b/oneplus-11-review-cnet-lanxon-promo-33.jpg?auto=webp&fit=crop&height=1200&width=1200" alt="OnePlus 11" class="w-full h-60 object-contain">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-lg">OnePlus 11</h3>
+                                <p class="text-slate-600 text-sm">120Hz AMOLED, Snapdragon 8 Gen 2</p>
+                            </div>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-slate-500 ml-1">(89)</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <span class="text-xl font-bold text-dark">$899</span>
+                            <button class="bg-primary text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-secondary transition-colors product-btn" data-name="OnePlus 11" data-price="899">
+                                <i class="fas fa-shopping-cart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers -->
+    <section class="py-12 bg-dark text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10">End of Year Deals</h2>
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-3xl shadow-2xl overflow-hidden">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/2 p-10 flex flex-col justify-center">
+                        <h3 class="text-4xl font-bold mb-4">Flash Sale!</h3>
+                        <p class="text-xl mb-6">Premium smartphones at never-before-seen prices. Limited time offer!</p>
+                        <div class="text-2xl font-bold mb-6">
+                            <span class="bg-white text-dark px-3 py-1 rounded">UP TO 40% OFF</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="text-center">
+                                <div class="bg-slate-800 text-xl rounded-lg py-2 px-4 w-20">12</div>
+                                <span class="text-slate-400 text-sm">HOURS</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-slate-800 text-xl rounded-lg py-2 px-4 w-20">45</div>
+                                <span class="text-slate-400 text-sm">MINUTES</span>
+                            </div>
+                            <div class="text-center">
+                                <div class="bg-slate-800 text-xl rounded-lg py-2 px-4 w-20">22</div>
+                                <span class="text-slate-400 text-sm">SECONDS</span>
+                            </div>
+                        </div>
+                        <button class="mt-8 bg-white text-dark font-bold py-3 px-8 rounded-lg hover:bg-opacity-90 transition-colors">Shop Sale</button>
+                    </div>
+                    <div class="md:w-1/2 flex justify-center items-center p-10">
+                        <img src="https://www.macworld.com/wp-content/uploads/2023/01/imac_21_5_2019_with_mba2019_04-1.jpg?quality=50&strip=all" alt="Special Offer" class="rounded-2xl max-w-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-dark">Why Shop With Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-8 bg-slate-50 rounded-xl transition-all hover:shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-16 h-16 rounded-full bg-accent bg-opacity-20 flex items-center justify-center">
+                            <i class="fas fa-shipping-fast text-2xl text-primary"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Free Shipping Worldwide</h3>
+                    <p class="text-slate-600">We offer free express shipping for orders over $199. Delivery within 5-7 business days.</p>
+                </div>
+                <div class="text-center p-8 bg-slate-50 rounded-xl transition-all hover:shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-shield-alt text-2xl text-primary"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">2 Year Warranty</h3>
+                    <p class="text-slate-600">All our devices come with a comprehensive 2-year manufacturer warranty for peace of mind.</p>
+                </div>
+                <div class="text-center p-8 bg-slate-50 rounded-xl transition-all hover:shadow-lg">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-comments text-2xl text-primary"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">24/7 Support</h3>
+                    <p class="text-slate-600">Our expert support team is ready to assist you anytime with any questions or concerns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-slate-200 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-white">TechTrend Electronics</h3>
+                    <p class="mb-4">Your destination for the latest smartphones and accessories at competitive prices. Serving tech enthusiasts since 2015.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-primary text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="hover:text-primary text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-primary text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-primary text-xl"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-accent">Home</a></li>
+                        <li><a href="#" class="hover:text-accent">Shop</a></li>
+                        <li><a href="#" class="hover:text-accent">Latest Deals</a></li>
+                        <li><a href="#" class="hover:text-accent">New Releases</a></li>
+                        <li><a href="#" class="hover:text-accent">Reviews</a></li>
+                        <li><a href="#" class="hover:text-accent">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="hover:text-accent">Customer Service</a></li>
+                        <li><a href="#" class="hover:text-accent">Order Tracking</a></li>
+                        <li><a href="#" class="hover:text-accent">Warranty Info</a></li>
+                        <li><a href="#" class="hover:text-accent">Return Policy</a></li>
+                        <li><a href="#" class="hover:text-accent">FAQ</a></li>
+                        <li><a href="#" class="hover:text-accent">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-white">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter for exclusive offers and the latest product releases.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 bg-slate-700 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-accent flex-grow">
+                        <button class="bg-primary text-white px-4 rounded-r-lg hover:bg-secondary transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-slate-700 mt-12 pt-6 text-center">
+                <p>&copy; 2023 TechTrend Electronics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Modal -->
+    <div id="cartModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden justify-end">
+        <div class="bg-white w-full md:w-1/3 h-full overflow-y-auto p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-2xl font-bold text-dark">Your Cart</h3>
+                <button id="closeCart" class="text-slate-500 hover:text-slate-800 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" class="mb-8">
+                <!-- Cart items will be added dynamically here -->
+                <p id="emptyCartMessage" class="text-center py-10">Your cart is empty</p>
+            </div>
+            
+            <div class="border-t border-slate-200 pt-4 mb-6">
+                <div class="flex justify-between mb-2">
+                    <span class="font-semibold">Subtotal:</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="text-slate-500 text-sm mb-6">Shipping and taxes calculated at checkout</div>
+                <button class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-secondary transition-colors">Checkout</button>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="text-dark border-b border-dark pb-1 hover:text-primary">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success Notification -->
+    <div id="successNotification" class="fixed bottom-4 right-4 bg-emerald-500 text-white p-4 rounded-lg shadow-lg hidden transition-all">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-xl mr-3"></i>
+            <span id="notificationMessage">Product added to cart successfully!</span>
+        </div>
+    </div>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        let cartSubtotal = 0;
+        
+        // DOM elements
+        const cartIcon = document.getElementById('cartIcon');
+        const mobileCartIcon = document.getElementById('mobileCartIcon');
+        const cartModal = document.getElementById('cartModal');
+        const closeCart = document.getElementById('closeCart');
+        const cartItems = document.getElementById('cartItems');
+        const cartSubtotalEl = document.getElementById('cartSubtotal');
+        const cartItemCount = document.getElementById('cartItemCount');
+        const mobileCartItemCount = document.getElementById('mobileCartItemCount');
+        const successNotification = document.getElementById('successNotification');
+        const notificationMessage = document.getElementById('notificationMessage');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileBrands = document.getElementById('mobileBrands');
+        const productButtons = document.querySelectorAll('.product-btn');
+        const emptyCartMessage = document.getElementById('emptyCartMessage');
+        
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('show-menu');
+        });
+        
+        function toggleMobileBrands() {
+            mobileBrands.classList.toggle('hidden');
+        }
+        
+        // Handle "Add to Cart" button clicks
+        productButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                
+                // Add item to cart
+                addToCart(name, price);
+                
+                // Update cart count display
+                updateCartCount();
+                
+                // Show success notification
+                notificationMessage.textContent = `${name} added to cart!`;
+                successNotification.classList.remove('hidden');
+                
+                // Hide notification after 3 seconds
+                setTimeout(() => {
+                    successNotification.classList.add('hidden');
+                }, 3000);
+            });
+        });
+        
+        // Add to cart function
+        function addToCart(name, price) {
+            // Check if product already exists in cart
+            const existingItem = cart.find(item => item.name === name);
+            
+            if (existingItem) {
+                // If it exists, increase quantity
+                existingItem.quantity++;
+            } else {
+                // If not, add new item
+                cart.push({
+                    name: name,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            // Update the cart display if cart modal is open
+            if (!cartModal.classList.contains('hidden')) {
+                renderCartItems();
+            }
+        }
+        
+        // Update the cart count indicator
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartItemCount.textContent = totalItems;
+            mobileCartItemCount.textContent = totalItems;
+            
+            if (totalItems > 0) {
+                cartItemCount.classList.remove('hidden');
+                mobileCartItemCount.classList.remove('hidden');
+            } else {
+                cartItemCount.classList.add('hidden');
+                mobileCartItemCount.classList.add('hidden');
+            }
+        }
+        
+        // Render cart items in the modal
+        function renderCartItems() {
+            // Clear current cart items
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartSubtotal = 0;
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                // Reset subtotal
+                cartSubtotal = 0;
+                
+                // Render each item
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    cartSubtotal += itemTotal;
+                    
+                    // Create item element
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex py-4 border-b border-slate-200';
+                    itemEl.innerHTML = `
+                        <div class="w-20 rounded-md bg-slate-100 p-2">
+                            <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 flex items-center justify-center">
+                                <i class="fas fa-mobile-alt text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="ml-4 flex-grow">
+                            <h4 class="font-bold">${item.name}</h4>
+                            <div class="flex justify-between mt-2">
+                                <div class="flex items-center border rounded-lg">
+                                    <button class="decrease-item px-3 py-1" data-index="${index}">-</button>
+                                    <span class="px-4">${item.quantity}</span>
+                                    <button class="increase-item px-3 py-1" data-index="${index}">+</button>
+                                </div>
+                                <span class="font-bold">$${item.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    cartItems.appendChild(itemEl);
+                    
+                    // Add event listeners to quantity buttons
+                    const decreaseBtn = itemEl.querySelector('.decrease-item');
+                    const increaseBtn = itemEl.querySelector('.increase-item');
+                    
+                    decreaseBtn.addEventListener('click', () => {
+                        if (item.quantity > 1) {
+                            item.quantity--;
+                            renderCartItems();
+                        } else {
+                            // Remove item completely if quantity is 1
+                            cart.splice(index, 1);
+                            renderCartItems();
+                        }
+                        updateCartCount();
+                    });
+                    
+                    increaseBtn.addEventListener('click', () => {
+                        item.quantity++;
+                        renderCartItems();
+                        updateCartCount();
+                    });
+                });
+            }
+            
+            // Update subtotal display
+            cartSubtotalEl.textContent = `$${cartSubtotal.toFixed(2)}`;
+        }
+        
+        // Open cart modal
+        cartIcon.addEventListener('click', () => {
+            renderCartItems();
+            cartModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        });
+        
+        mobileCartIcon.addEventListener('click', () => {
+            renderCartItems();
+            cartModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        });
+        
+        // Close cart modal
+        closeCart.addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        });
+        
+        // Close modal when clicking outside
+        cartModal.addEventListener('click', (e) => {
+            if (e.target === cartModal) {
+                cartModal.classList.add('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }
+        });
+        
+        // Initialize cart display
+        updateCartCount();
+
+        // Hero Slider
+        const slides = document.querySelectorAll('.hero-slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        // Dot navigation
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                showSlide(parseInt(dot.getAttribute('data-slide')));
+            });
+        });
+
+        // Auto slide change
+        setInterval(() => {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            showSlide(nextSlide);
+        }, 5000);
+    </script>
+</body>
+</html>
